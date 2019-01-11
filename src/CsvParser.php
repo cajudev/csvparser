@@ -1,5 +1,9 @@
 <?php namespace Cajudev\CsvParser;
 
+/**
+ * @author Richard Lopes
+ */
+
 class CsvParser {
 
     private $file;
@@ -7,10 +11,24 @@ class CsvParser {
     private $filters;
     private $columns;
 
+    /**
+     * __construct
+     *
+     * @param  mixed $dir
+     *
+     * @return void
+     */
+    
     public function __construct(string $dir) {
         $this->setFile($dir);
         $this->setFlags();
     }
+
+    /**
+     * parse
+     *
+     * @return array
+     */
 
     public function parse() {
         $this->setHeader();
@@ -19,10 +37,22 @@ class CsvParser {
         return $this->get();
     }
 
+    /**
+     * setHeader
+     *
+     * @return void
+     */
+    
     private function setHeader() {
         $this->header = $this->file->fgetcsv();
     }
 
+    /**
+     * setContent
+     *
+     * @return void
+     */
+    
     private function setContent() {
         $i = 0;
         while($row = $this->file->fgetcsv()) {
@@ -33,6 +63,12 @@ class CsvParser {
         }
     }
 
+    /**
+     * get
+     *
+     * @return array
+     */
+    
     private function get() {
 
         if(!empty($this->filters)) {
@@ -46,6 +82,14 @@ class CsvParser {
         return $this->content;
     }
 
+    /**
+     * getArrayColumns
+     *
+     * @param  mixed $contents
+     *
+     * @return array
+     */
+    
     private function getArrayColumns($contents = null) {
         $contents = $contents ?? $this->content;
 
@@ -57,6 +101,12 @@ class CsvParser {
 
         return $ret;
     }
+
+    /**
+     * getArrayFiltered
+     *
+     * @return array
+     */
 
     private function getArrayFiltered() {
         foreach($this->content as $row) {
@@ -76,21 +126,59 @@ class CsvParser {
         return !empty($this->columns) ? $this->getArrayColumns($ret) : $ret;
     }
 
+    /**
+     * setDelimiter
+     *
+     * @param  mixed $delimiter
+     *
+     * @return void
+     */
+    
     public function setDelimiter($delimiter) {
         $this->file->setCsvControl($delimiter);
     }
 
+    /**
+     * setColumns
+     *
+     * @param  mixed $columns
+     *
+     * @return void
+     */
+    
     public function setColumns(array $columns) {
         $this->columns = $columns;
     }
 
+    /**
+     * setFilters
+     *
+     * @param  mixed $filters
+     *
+     * @return void
+     */
+    
     public function setFilters(array $filters) {
         $this->filters = $filters;
     }
 
+    /**
+     * setFile
+     *
+     * @param  mixed $dir
+     *
+     * @return void
+     */
+    
     private function setFile($dir) {
         $this->file = new \SplFileObject($dir);
     }
+
+    /**
+     * setFlags
+     *
+     * @return void
+     */
 
     private function setFlags() {
         $this->file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
