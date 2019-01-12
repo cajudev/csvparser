@@ -1,5 +1,5 @@
 <?php
-use Cajudev\CsvParser\CsvParser;
+use Cajudev\CsvParser;
 use PHPUnit\Framework\TestCase;
 
 /**

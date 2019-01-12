@@ -1,4 +1,4 @@
-<?php namespace Cajudev\CsvParser;
+<?php namespace Cajudev;
 
 /**
  * @author Richard Lopes
