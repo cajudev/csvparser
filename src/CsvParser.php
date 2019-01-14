@@ -131,11 +131,12 @@ class CsvParser {
      *
      * @param  mixed $delimiter
      *
-     * @return void
+     * @return self
      */
     
-    public function setDelimiter($delimiter) {
+    public function setDelimiter($delimiter) : self {
         $this->file->setCsvControl($delimiter);
+        return $this;
     }
 
     /**
@@ -143,11 +144,12 @@ class CsvParser {
      *
      * @param  mixed $columns
      *
-     * @return void
+     * @return self
      */
     
-    public function setColumns(array $columns) {
+    public function setColumns(array $columns) : self {
         $this->columns = $columns;
+        return $this;
     }
 
     /**
@@ -155,11 +157,12 @@ class CsvParser {
      *
      * @param  mixed $filters
      *
-     * @return void
+     * @return self
      */
     
-    public function setFilters(array $filters) {
+    public function setFilters(array $filters) : self {
         $this->filters = $filters;
+        return $this;
     }
 
     /**
