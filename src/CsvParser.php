@@ -1,11 +1,12 @@
-<?php namespace Cajudev;
+<?php
+namespace Cajudev;
 
 /**
  * @author Richard Lopes
  */
 
-class CsvParser {
-
+class CsvParser
+{
     private $file;
     private $content;
     private $filters;
@@ -14,12 +15,13 @@ class CsvParser {
     /**
      * __construct
      *
-     * @param  mixed $dir
+     * @param string $dir
      *
      * @return void
      */
     
-    public function __construct(string $dir) {
+    public function __construct(string $dir)
+    {
         $this->setFile($dir);
         $this->setFlags();
     }
@@ -30,7 +32,8 @@ class CsvParser {
      * @return array
      */
 
-    public function parse() {
+    public function parse() : array
+    {
         $this->setHeader();
         $this->setContent();
 
@@ -43,7 +46,8 @@ class CsvParser {
      * @return void
      */
     
-    private function setHeader() {
+    private function setHeader()
+    {
         $this->header = $this->file->fgetcsv();
     }
 
@@ -53,11 +57,12 @@ class CsvParser {
      * @return void
      */
     
-    private function setContent() {
+    private function setContent()
+    {
         $i = 0;
-        while($row = $this->file->fgetcsv()) {
-            for($j = 0, $size = count($row); $j < $size; $j++) {
-                $this->content[$i][$this->header[$j]] = $row[$j];
+        while ($row = $this->file->fgetcsv()) {
+            foreach ($row as $key => $value) {
+                $this->content[$i][$this->header[$key]] = $row[$key];
             }
             $i++;
         }
@@ -69,13 +74,13 @@ class CsvParser {
      * @return array
      */
     
-    private function get() {
-
-        if(!empty($this->filters)) {
+    private function get() : array
+    {
+        if (!empty($this->filters)) {
             return $this->getArrayFiltered();
         }
 
-        if(!empty($this->columns)) {
+        if (!empty($this->columns)) {
             return $this->getArrayColumns();
         }
 
@@ -90,11 +95,12 @@ class CsvParser {
      * @return array
      */
     
-    private function getArrayColumns($contents = null) {
+    private function getArrayColumns($contents = null) : array
+    {
         $contents = $contents ?? $this->content;
 
-        foreach($contents as $index => $content) {
-            foreach($this->columns as $column) {
+        foreach ($contents as $index => $content) {
+            foreach ($this->columns as $column) {
                 $ret[$index][$column] = $content[$column];
             }
         }
@@ -108,22 +114,25 @@ class CsvParser {
      * @return array
      */
 
-    private function getArrayFiltered() {
-        foreach($this->content as $row) {
+    private function getArrayFiltered() : array
+    {
+        $ret = [];
+
+        foreach ($this->content as $row) {
             $apply = true;
 
-            foreach($this->filters as $key => $value) {
-                if(!in_array($row[$key], $value)) {
+            foreach ($this->filters as $key => $value) {
+                if (!in_array($row[$key], $value)) {
                     $apply = false;
                 }
             }
 
-            if($apply) {
+            if ($apply) {
                 $ret[] = $row;
             }
         }
 
-        return !empty($this->columns) ? $this->getArrayColumns($ret) : $ret;
+        return isset($this->columns) ? $this->getArrayColumns($ret) : $ret;
     }
 
     /**
@@ -134,7 +143,8 @@ class CsvParser {
      * @return self
      */
     
-    public function setDelimiter($delimiter) : self {
+    public function setDelimiter($delimiter) : self
+    {
         $this->file->setCsvControl($delimiter);
         return $this;
     }
@@ -147,7 +157,8 @@ class CsvParser {
      * @return self
      */
     
-    public function setColumns(array $columns) : self {
+    public function setColumns(array $columns) : self
+    {
         $this->columns = $columns;
         return $this;
     }
@@ -160,7 +171,8 @@ class CsvParser {
      * @return self
      */
     
-    public function setFilters(array $filters) : self {
+    public function setFilters(array $filters) : self
+    {
         $this->filters = $filters;
         return $this;
     }
@@ -173,7 +185,8 @@ class CsvParser {
      * @return void
      */
     
-    private function setFile($dir) {
+    private function setFile(string $dir)
+    {
         $this->file = new \SplFileObject($dir);
     }
 
@@ -183,7 +196,8 @@ class CsvParser {
      * @return void
      */
 
-    private function setFlags() {
+    private function setFlags()
+    {
         $this->file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
     }
 }

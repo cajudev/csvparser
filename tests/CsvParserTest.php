@@ -5,13 +5,17 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Richard Lopes
  */
-class DateTest extends TestCase {
 
-	public function setUp() {
+class DateTest extends TestCase
+{
+
+    public function setUp()
+    {
         $this->csv = new CsvParser(__DIR__ . '/files/sails.csv');
 	}
 
-    public function test_Parse_With_SetColumns_Should_Return_Array_With_300_Registers() {
+    public function test_Parse_With_SetColumns()
+    {
         $columns = ['Product', 'Price', 'Payment_Type', 'Name'];
 
         $results = $this->csv->setDelimiter(',')
@@ -21,7 +25,8 @@ class DateTest extends TestCase {
         self::assertEquals(998, count($results));
     }
 
-    public function test_Parse_With_SetFilters_Should_Return_Array_With_5_Registers() {
+    public function test_Parse_With_SetFilters()
+    {
         $filters = [
             'Payment_Type' => ['Visa'],
             'State'        => ['Quebec'],
@@ -34,7 +39,8 @@ class DateTest extends TestCase {
         self::assertEquals(5, count($results));
     }
     
-	public function test_Parse_With_SetColumns_And_SetFilters_Should_Return_Array_With_95_Registers() {
+    public function test_Parse_With_SetColumns_And_SetFilters()
+    {
         $columns = ['Product', 'Price', 'Payment_Type', 'Name'];
 
         $filters = [
