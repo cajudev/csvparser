@@ -16,5 +16,5 @@ Leia a documentação completa em: https://cajudev.readthedocs.io
 Características
 ---------------
 
-* Padrão PSR-4
+* Segue os padrões PSR-1, PSR-2 e PSR-4
 * Testes unitários com PHPUnit
