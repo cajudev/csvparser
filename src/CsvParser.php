@@ -99,6 +99,8 @@ class CsvParser
     {
         $contents = $contents ?? $this->content;
 
+        $ret = [];
+        
         foreach ($contents as $index => $content) {
             foreach ($this->columns as $column) {
                 $ret[$index][$column] = $content[$column];
