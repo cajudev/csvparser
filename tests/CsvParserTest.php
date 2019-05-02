@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
  * @author Richard Lopes
  */
 
-class DateTest extends TestCase
+class CsvParserTest extends TestCase
 {
 
     public function setUp()
