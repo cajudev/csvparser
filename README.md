@@ -11,7 +11,7 @@ Bem vindo ao CsvParser
 
 Uma simples, porém eficiente interface para trabalhar com arquivos csv
 
-Leia a documentação completa em: http://cajudev.readthedocs.io/pt/latest/csvparser
+Leia a documentação completa em: http://cajudev.readthedocs.io/pt_BR/latest/csvparser
 
 Características
 ---------------
